@@ -1,0 +1,519 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+		"name": "Stock Market API - Multi-Model System",
+		"description": "Complete collection for 11 stock market APIs. Each API stores data in its own separate database collection. Base URL: http://localhost:3000",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "🔥 1. Trending Stocks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has success field\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Data stored in trending_stocks collection\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.api_name).to.eql(\"trending\");",
+							"    pm.expect(jsonData.data.status).to.be.oneOf([\"success\", \"failed\"]);",
+							"});",
+							"",
+							"// Log response time for monitoring",
+							"if (pm.response.json().data && pm.response.json().data.response_time_ms) {",
+							"    console.log(\"Response Time:\", pm.response.json().data.response_time_ms + \"ms\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/multi-stock/fetch/trending",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "multi-stock", "fetch", "trending"]
+				},
+				"description": "Fetches trending stocks data and stores in 'trending_stocks' collection"
+			},
+			"response": []
+		},
+		{
+			"name": "📈 2. 52 Week Gainers/Losers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Data stored in week_52_high_low collection\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.api_name).to.eql(\"fetch_52_week_high_low_data\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/multi-stock/fetch/52-week-high-low",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "multi-stock", "fetch", "52-week-high-low"]
+				},
+				"description": "Fetches 52 week high/low data and stores in 'week_52_high_low' collection"
+			},
+			"response": []
+		},
+		{
+			"name": "🏢 3. Company Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Data stored in company_details collection\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.api_name).to.eql(\"stock\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/multi-stock/fetch/company-details?name=tata steel",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "multi-stock", "fetch", "company-details"],
+					"query": [
+						{
+							"key": "name",
+							"value": "tata steel",
+							"description": "Company name to fetch details for"
+						}
+					]
+				},
+				"description": "Fetches company details and stores in 'company_details' collection. Change name parameter for different companies."
+			},
+			"response": []
+		},
+		{
+			"name": "📊 4. Historical Data (Price Filtered)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Data stored in historical_data collection\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.api_name).to.eql(\"historical_data_price\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/multi-stock/fetch/historical-price?stock_name=tcs&period=1m&filter=price",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "multi-stock", "fetch", "historical-price"],
+					"query": [
+						{
+							"key": "stock_name",
+							"value": "tcs",
+							"description": "Stock symbol"
+						},
+						{
+							"key": "period",
+							"value": "1m",
+							"description": "Time period (1m, 3m, 6m, 1y)"
+						},
+						{
+							"key": "filter",
+							"value": "price",
+							"description": "Data filter (price, volume, etc)"
+						}
+					]
+				},
+				"data": {
+					"stock_name": "tcs",
+					"period": "1m",
+					"filter": "price"
+				},
+				"description": "Fetches historical price data and stores in 'historical_data' collection with price filter"
+			},
+			"response": []
+		},
+		{
+			"name": "🔍 5. Industry Search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Data stored in industry_search collection\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.api_name).to.eql(\"industry_search\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/multi-stock/fetch/industry-search?query=tata",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "multi-stock", "fetch", "industry-search"],
+					"query": [
+						{
+							"key": "query",
+							"value": "tata",
+							"description": "Search query for industry/companies"
+						}
+					]
+				},
+				"description": "Searches for companies/industries and stores in 'industry_search' collection"
+			},
+			"response": []
+		},
+		{
+			"name": "📉 6. Historical Data (OHLCV)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Data stored in historical_data collection\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.api_name).to.eql(\"historical_data_ohlcv\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/multi-stock/fetch/historical-ohlcv?stock_name=tcs&period=1m",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "multi-stock", "fetch", "historical-ohlcv"],
+					"query": [
+						{
+							"key": "stock_name",
+							"value": "tcs",
+							"description": "Stock symbol"
+						},
+						{
+							"key": "period",
+							"value": "1m",
+							"description": "Time period (1m, 3m, 6m, 1y)"
+						}
+					]
+				},
+				"description": "Fetches historical OHLCV data and stores in 'historical_data' collection"
+			},
+			"response": []
+		},
+		{
+			"name": "💰 7. Stock Fundamentals",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Data stored in company_details collection\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.api_name).to.eql(\"stock_fundamentals\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/multi-stock/fetch/stock-fundamentals?name=infosys",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "multi-stock", "fetch", "stock-fundamentals"],
+					"query": [
+						{
+							"key": "name",
+							"value": "infosys",
+							"description": "Company name for fundamentals data"
+						}
+					]
+				},
+				"description": "Fetches stock fundamentals (market cap, PE ratio etc) and stores in 'company_details' collection"
+			},
+			"response": []
+		},
+		{
+			"name": "⚡ 8. NSE Most Active",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Data stored in nse_most_active collection\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.api_name).to.eql(\"nse_most_active\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/multi-stock/fetch/nse-most-active",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "multi-stock", "fetch", "nse-most-active"]
+				},
+				"description": "Fetches NSE most active stocks and stores in 'nse_most_active' collection"
+			},
+			"response": []
+		},
+		{
+			"name": "⚡ 9. BSE Most Active",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Data stored in bse_most_active collection\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.api_name).to.eql(\"bse_most_active\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/multi-stock/fetch/bse-most-active",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "multi-stock", "fetch", "bse-most-active"]
+				},
+				"description": "Fetches BSE most active stocks and stores in 'bse_most_active' collection"
+			},
+			"response": []
+		},
+		{
+			"name": "🆕 10. IPO Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Data stored in ipo_data collection\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.api_name).to.eql(\"ipo\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/multi-stock/fetch/ipo",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "multi-stock", "fetch", "ipo"]
+				},
+				"description": "Fetches IPO data and stores in 'ipo_data' collection"
+			},
+			"response": []
+		},
+		{
+			"name": "📊 11. 52 Week High/Low (Alternative)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Data stored in week_52_high_low collection\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.api_name).to.eql(\"fetch_52_week_high_low\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/multi-stock/fetch/52-week-high-low-alt",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "multi-stock", "fetch", "52-week-high-low-alt"]
+				},
+				"description": "Alternative endpoint for 52 week high/low data, stores in 'week_52_high_low' collection"
+			},
+			"response": []
+		},
+		{
+			"name": "🚀 Fetch All APIs (Batch)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"All 11 APIs executed\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.summary.total).to.eql(11);",
+							"    console.log(\"Successful:\", jsonData.data.summary.successful);",
+							"    console.log(\"Failed:\", jsonData.data.summary.failed);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/multi-stock/fetch/all",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "multi-stock", "fetch", "all"]
+				},
+				"description": "Executes all 11 APIs concurrently and stores data in respective collections"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Global pre-request script",
+					"console.log(\"=== API Call Started ===\");",
+					"console.log(\"Timestamp:\", new Date().toISOString());",
+					"console.log(\"Request:\", pm.info.requestName);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Global test script",
+					"console.log(\"=== API Call Completed ===\");",
+					"console.log(\"Status:\", pm.response.code);",
+					"console.log(\"Response Time:\", pm.response.responseTime + \"ms\");"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
