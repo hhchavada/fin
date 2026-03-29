@@ -35,21 +35,7 @@ export class IndividualMultiModelServices {
     return await multiModelStockService.fetchAndStore(config);
   }
 
-  // 4. Historical data (price filtered)
-  async getHistoricalDataPrice(
-    stockName: string = 'tcs', 
-    period: string = '1m', 
-    filter: string = 'price'
-  ) {
-    logger.info(`Fetching historical price data for ${stockName}, period: ${period}, filter: ${filter}`);
-    const config = {
-      ...STOCK_API_ENDPOINTS.find(api => api.name === 'historical_data_price')!,
-      params: { stock_name: stockName, period, filter }
-    };
-    return await multiModelStockService.fetchAndStore(config);
-  }
-
-  // 5. Industry search
+  // 4. Industry search
   async searchIndustry(query: string = 'tata') {
     logger.info(`Searching industry with query: ${query}`);
     const config = {
@@ -59,20 +45,7 @@ export class IndividualMultiModelServices {
     return await multiModelStockService.fetchAndStore(config);
   }
 
-  // 6. Historical data (OHLCV)
-  async getHistoricalDataOHLCV(
-    stockName: string = 'tcs', 
-    period: string = '1m'
-  ) {
-    logger.info(`Fetching historical OHLCV data for ${stockName}, period: ${period}`);
-    const config = {
-      ...STOCK_API_ENDPOINTS.find(api => api.name === 'historical_data_ohlcv')!,
-      params: { stock_name: stockName, period }
-    };
-    return await multiModelStockService.fetchAndStore(config);
-  }
-
-  // 7. Stock fundamentals
+  // 5. Stock fundamentals
   async getStockFundamentals(stockName: string = 'infosys') {
     logger.info(`Fetching stock fundamentals for: ${stockName}`);
     const config = {
@@ -82,35 +55,35 @@ export class IndividualMultiModelServices {
     return await multiModelStockService.fetchAndStore(config);
   }
 
-  // 8. NSE most active
+  // 6. NSE most active
   async getNSEMostActive() {
     logger.info('Fetching NSE most active stocks');
     const config = STOCK_API_ENDPOINTS.find(api => api.name === 'nse_most_active')!;
     return await multiModelStockService.fetchAndStore(config);
   }
 
-  // 9. BSE most active
+  // 7. BSE most active
   async getBSEMostActive() {
     logger.info('Fetching BSE most active stocks');
     const config = STOCK_API_ENDPOINTS.find(api => api.name === 'bse_most_active')!;
     return await multiModelStockService.fetchAndStore(config);
   }
 
-  // 10. IPO data
+  // 8. IPO data
   async getIPOData() {
     logger.info('Fetching IPO data');
     const config = STOCK_API_ENDPOINTS.find(api => api.name === 'ipo')!;
     return await multiModelStockService.fetchAndStore(config);
   }
 
-  // 11. Fetch 52 week high/low (duplicate for different naming)
+  // 9. 52 week high/low (duplicate for different naming)
   async get52WeekHighLow() {
     logger.info('Fetching 52 week high/low data');
     const config = STOCK_API_ENDPOINTS.find(api => api.name === 'fetch_52_week_high_low')!;
     return await multiModelStockService.fetchAndStore(config);
   }
 
-  // 12. Fetch all APIs (batch)
+  // 10. Fetch all APIs (batch)
   async fetchAllStockApis() {
     logger.info('Fetching data from all stock APIs');
     return await multiModelStockService.fetchMultipleApis(STOCK_API_ENDPOINTS);
