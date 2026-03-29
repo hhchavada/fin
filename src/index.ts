@@ -8,6 +8,7 @@ import stockRoutes from './routes/stockRoutes';
 import cronRoutes from './routes/cronRoutes';
 import multiModelStockRoutes from './routes/multiModelStockRoutes';
 import userStockDataRoutes from './routes/userStockDataRoutes';
+import directSearchRoutes from './routes/directSearchRoutes';
 
 // Load environment variables
 dotenv.config();
@@ -39,6 +40,7 @@ app.use('/api/v1/stock', stockRoutes);
 app.use('/api/v1/cron', cronRoutes);
 app.use('/api/v1/multi-stock', multiModelStockRoutes);
 app.use('/api/v1/stock-data', userStockDataRoutes);
+app.use('/api/v1/search', directSearchRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {

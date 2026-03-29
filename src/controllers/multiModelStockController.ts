@@ -97,41 +97,6 @@ export class MultiModelStockController {
   }
 
   /**
-   * Get historical data (price filtered)
-   */
-  async getHistoricalDataPrice(req: Request, res: Response) {
-    try {
-      const { stock_name, period, filter } = req.query;
-      
-      const result = await individualMultiModelServices.getHistoricalDataPrice(
-        (stock_name as string) || 'tcs',
-        (period as string) || '1m',
-        (filter as string) || 'price'
-      );
-      
-      res.json({
-        success: true,
-        message: 'Historical price data fetched successfully',
-        data: {
-          api_name: result.api_name,
-          status: result.status,
-          fetched_at: result.fetched_at,
-          response_time_ms: result.response_time_ms,
-          data: result.data,
-          meta: result.meta
-        }
-      });
-    } catch (error: any) {
-      logger.error('Failed to fetch historical price data', error);
-      res.status(500).json({
-        success: false,
-        message: 'Failed to fetch historical price data',
-        error: error.message
-      });
-    }
-  }
-
-  /**
    * Search industry
    */
   async searchIndustry(req: Request, res: Response) {
@@ -158,40 +123,6 @@ export class MultiModelStockController {
       res.status(500).json({
         success: false,
         message: 'Failed to search industry',
-        error: error.message
-      });
-    }
-  }
-
-  /**
-   * Get historical data (OHLCV)
-   */
-  async getHistoricalDataOHLCV(req: Request, res: Response) {
-    try {
-      const { stock_name, period } = req.query;
-      
-      const result = await individualMultiModelServices.getHistoricalDataOHLCV(
-        (stock_name as string) || 'tcs',
-        (period as string) || '1m'
-      );
-      
-      res.json({
-        success: true,
-        message: 'Historical OHLCV data fetched successfully',
-        data: {
-          api_name: result.api_name,
-          status: result.status,
-          fetched_at: result.fetched_at,
-          response_time_ms: result.response_time_ms,
-          data: result.data,
-          meta: result.meta
-        }
-      });
-    } catch (error: any) {
-      logger.error('Failed to fetch historical OHLCV data', error);
-      res.status(500).json({
-        success: false,
-        message: 'Failed to fetch historical OHLCV data',
         error: error.message
       });
     }

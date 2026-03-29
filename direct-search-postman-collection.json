@@ -1,0 +1,285 @@
+{
+	"info": {
+		"_postman_id": "direct-search-abc123-def456-7890-5678",
+		"name": "🔍 Direct Search APIs - Real-time Data",
+		"description": "Collection for direct API search endpoints. These make real-time API calls without database storage. Perfect for user search functionality. Base URL: http://localhost:3000",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "🏢 1. Search Company Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Company details found\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.be.true;",
+							"    pm.expect(jsonData.data).to.not.be.null;",
+							"    pm.expect(jsonData.search_type).to.eql('company_details');",
+							"});",
+							"",
+							"console.log(\"Search Query:\", jsonData.search_query);",
+							"console.log(\"Response Time:\", jsonData.response_time_ms + \"ms\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/search/company?name=tata%20steel",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "search", "company"],
+					"query": [
+						{
+							"key": "name",
+							"value": "tata steel",
+							"description": "Company name to search"
+						}
+					]
+				},
+				"description": "Search company details by name. Direct API call with real-time data."
+			},
+			"response": []
+		},
+		{
+			"name": "📊 2. Search Historical Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Historical data found\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.be.true;",
+							"    pm.expect(jsonData.search_type).to.eql('historical_data');",
+							"});",
+							"",
+							"console.log(\"Stock:\", jsonData.search_query.stock_name);",
+							"console.log(\"Period:\", jsonData.search_query.period);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/search/historical?stock_name=tcs&period=1m&filter=price",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "search", "historical"],
+					"query": [
+						{
+							"key": "stock_name",
+							"value": "tcs",
+							"description": "Stock symbol"
+						},
+						{
+							"key": "period",
+							"value": "1m",
+							"description": "Time period (1m, 3m, 6m, 1y)"
+						},
+						{
+							"key": "filter",
+							"value": "price",
+							"description": "Data filter (price, volume, etc)"
+						}
+					]
+				},
+				"description": "Search historical stock data with filters. Direct API call with real-time data."
+			},
+			"response": []
+		},
+		{
+			"name": "💰 3. Search Stock Fundamentals",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Stock fundamentals found\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.be.true;",
+							"    pm.expect(jsonData.search_type).to.eql('stock_fundamentals');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/search/fundamentals?name=infosys",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "search", "fundamentals"],
+					"query": [
+						{
+							"key": "name",
+							"value": "infosys",
+							"description": "Company name for fundamentals data"
+						}
+					]
+				},
+				"description": "Search stock fundamentals (market cap, PE ratio, etc). Direct API call with real-time data."
+			},
+			"response": []
+		},
+		{
+			"name": "🔍 4. Search Industry",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Industry search results found\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.be.true;",
+							"    pm.expect(jsonData.search_type).to.eql('industry_search');",
+							"});",
+							"",
+							"console.log(\"Search Query:\", jsonData.search_query);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/search/industry?query=tata",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "search", "industry"],
+					"query": [
+						{
+							"key": "query",
+							"value": "tata",
+							"description": "Search query for companies/industries"
+						}
+					]
+				},
+				"description": "Search for companies and industries by query. Direct API call with real-time data."
+			},
+			"response": []
+		},
+		{
+			"name": "🎯 5. Universal Search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Universal search successful\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.be.true;",
+							"    pm.expect(jsonData.search_type).to.be.oneOf(['company', 'historical', 'fundamentals', 'industry']);",
+							"});",
+							"",
+							"console.log(\"Search Type:\", jsonData.search_query.type);",
+							"console.log(\"Full Query:\", JSON.stringify(jsonData.search_query, null, 2));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/search/universal?type=company&name=reliance",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "3000",
+					"path": ["api", "v1", "search", "universal"],
+					"query": [
+						{
+							"key": "type",
+							"value": "company",
+							"description": "Search type: company, historical, fundamentals, industry"
+						},
+						{
+							"key": "name",
+							"value": "reliance",
+							"description": "Company name (for company/fundamentals types)"
+						}
+					]
+				},
+				"description": "Universal search endpoint that can search across all API types. Use different parameters based on search type."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Global pre-request script",
+					"console.log(\"=== Direct API Search Started ===\");",
+					"console.log(\"Timestamp:\", new Date().toISOString());",
+					"console.log(\"Request:\", pm.info.requestName);",
+					"console.log(\"Endpoint:\", pm.request.url.path);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Global test script",
+					"console.log(\"=== Direct API Search Completed ===\");",
+					"console.log(\"Status:\", pm.response.code);",
+					"console.log(\"Response Time:\", pm.response.responseTime + \"ms\");",
+					"// Verify it's a direct API call (no database)",
+					"if (pm.response.json().timestamp) {",
+					"    console.log(\"Data Source: DIRECT API CALL (Real-time)\");",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}

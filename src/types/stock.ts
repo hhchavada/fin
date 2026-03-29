@@ -58,22 +58,10 @@ export const STOCK_API_ENDPOINTS: StockApiConfig[] = [
     params: { name: 'tata steel' }
   },
   {
-    name: 'historical_data_price',
-    endpoint: '/historical_data',
-    method: 'GET',
-    params: { stock_name: 'tcs', period: '1m', filter: 'price' }
-  },
-  {
     name: 'industry_search',
     endpoint: '/industry_search',
     method: 'GET',
     params: { query: 'tata' }
-  },
-  {
-    name: 'historical_data_ohlcv',
-    endpoint: '/historical_data',
-    method: 'GET',
-    params: { stock_name: 'tcs', period: '1m' }
   },
   {
     name: 'stock_fundamentals',
